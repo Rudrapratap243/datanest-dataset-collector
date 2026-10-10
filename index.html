@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dataset Collector</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#"><span class="brand-mark">D</span><span>Data<small>DATA WORKSPACE</small></span></a>
+      <div class="nav-label">WORKSPACE</div>
+      <button class="nav-item active"><span>▦</span> Overview</button>
+      <button class="nav-item" id="navDatasets"><span>▤</span> My datasets <b id="navCount">0</b></button>
+      <button class="nav-item" id="navAnalytics"><span>◷</span> Analytics</button>
+      <div class="sidebar-bottom">
+        <div class="help-card">
+          <div class="help-icon">✦</div><strong>Ready to explore?</strong>
+          <p>Upload a CSV file to start discovering insights from your data.</p><button id="helpUpload">Upload dataset
+            ↗</button>
+        </div>
+        <div class="profile">
+          <div class="avatar">U</div>
+          <div><strong>Data Analyst</strong><small>Personal workspace</small></div><span class="dots">•••</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="crumb">Workspace <span>/</span> <strong>Overview</strong></div>
+        <div class="top-actions"><span class="status"><i></i> All systems ready</span><button class="icon-btn"
+            aria-label="Notifications">♧</button>
+          <div class="avatar small-avatar">U</div>
+        </div>
+      </header>
+      <section class="welcome-row">
+        <div>
+          <p class="eyebrow">SATURDAY, OCTOBER 10, 2026</p>
+          <h1>Good afternoon 👋</h1>
+          <p class="subtitle">Bring your data together. Find the story inside it.</p>
+        </div>
+        <button class="primary-btn" id="uploadTop"><span>＋</span> Collect dataset</button>
+      </section>
+
+      <section class="stats-grid">
+        <article class="stat-card">
+          <div class="stat-top"><span>Total datasets</span><span class="stat-icon blue">▤</span></div>
+          <div class="stat-value" id="totalDatasets">0</div>
+          <div class="stat-foot"><span class="muted">In your workspace</span></div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span>Total records</span><span class="stat-icon purple">☷</span></div>
+          <div class="stat-value" id="totalRecords">0</div>
+          <div class="stat-foot"><span class="muted">Across all datasets</span></div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span>Data columns</span><span class="stat-icon teal">▥</span></div>
+          <div class="stat-value" id="totalColumns">0</div>
+          <div class="stat-foot"><span class="muted">Unique fields collected</span></div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span>Storage used</span><span class="stat-icon orange">◫</span></div>
+          <div class="stat-value" id="storageUsed">0 KB</div>
+          <div class="stat-foot"><span class="muted">Browser workspace</span></div>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel collection-panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Your datasets</h2>
+              <p>Manage and preview your collected data.</p>
+            </div><button class="text-btn" id="viewAll">View all <span>→</span></button>
+          </div>
+          <div class="toolbar"><label class="search-box"><span>⌕</span><input id="searchInput" type="search"
+                placeholder="Search datasets..." /></label><select id="typeFilter" aria-label="Filter by file type">
+              <option value="all">All file types</option>
+              <option value="csv">CSV</option>
+              <option value="json">JSON</option>
+            </select></div>
+          <div id="datasetList" class="dataset-list">
+            <div class="empty-state">
+              <div class="empty-illustration">⇧</div>
+              <h3>Your workspace is waiting</h3>
+              <p>Upload a CSV file or try a sample dataset to see your data come to life.</p>
+              <div class="empty-actions"><button class="primary-btn" id="emptyUpload">Upload a dataset</button><button
+                  class="secondary-btn" id="sampleBtn">Try sample data</button></div>
+            </div>
+          </div>
+        </article>
+        <article class="panel quick-panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Quick start</h2>
+              <p>Get your data ready in a few steps.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">1</div>
+            <div><strong>Collect a dataset</strong>
+              <p>Upload a CSV file from your device.</p>
+            </div><span class="step-check">✓</span>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <div><strong>Preview your records</strong>
+              <p>Check columns and sample rows.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <div><strong>Explore the insights</strong>
+              <p>Review data quality and summaries.</p>
+            </div>
+          </div>
+          <div class="tip-box"><span>✦</span>
+            <div><strong>Pro tip</strong>
+              <p>Use the first row of your CSV as column headings for the best preview experience.</p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="panel preview-panel" id="previewPanel" hidden>
+        <div class="panel-heading">
+          <div>
+            <h2 id="previewTitle">Dataset preview</h2>
+            <p id="previewMeta">Your first records are shown below.</p>
+          </div>
+          <div class="preview-actions"><button class="secondary-btn" id="downloadBtn">Download CSV</button><button
+              class="icon-btn" id="closePreview" aria-label="Close preview">×</button></div>
+        </div>
+        <div class="table-wrap">
+          <table id="previewTable"></table>
+        </div>
+        <div class="preview-footer" id="previewFooter"></div>
+      </section>
+
+      <section class="panel analytics-panel" id="analyticsPanel" hidden>
+        <div class="panel-heading">
+          <div>
+            <h2>Dataset insights</h2>
+            <p>A quick overview of the currently selected dataset.</p>
+          </div>
+        </div>
+        <div id="insightsContent" class="insights-grid"></div>
+      </section>
+      <footer>© 2026 DataNest <span>Built for smarter data collection.</span></footer>
+    </main>
+  </div>
+
+  <input type="file" id="fileInput" accept=".csv,.json,text/csv,application/json" hidden />
+  <div class="toast" id="toast" role="status"></div>
+  <script src="script.js"></script>
+</body>
+
+</html>
